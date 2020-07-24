@@ -19,6 +19,7 @@ router.post('/signup', async (req, res) => {
   const user = new User({
     name: req.body.name,
     passcode: hashedPassword,
+    avatar: req.body.avatar,
     modificationDate: new Date(),
   });
 
@@ -47,6 +48,7 @@ router.post('/signin', async (req, res) => {
   res.json({
     id: user.id,
     name: user.name,
+    avatar: user.avatar,
     modificationDate: user.modificationDate,
   });
 });

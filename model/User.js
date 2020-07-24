@@ -13,10 +13,16 @@ const userSchema = new mongoose.Schema({
     min: 4,
     max: 4,
   },
+  avatar: {
+    type: String,
+    required: true,
+    min: 2,
+    max: 255,
+  },
   modificationDate: {
     type: Date,
-    required: true
-  }
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('User', userSchema);
