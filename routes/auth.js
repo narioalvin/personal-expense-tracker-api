@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
-const { validation } = require('../validation');
+const { signUpValidation, signInValidation } = require('../validation');
 
 router.post('/signup', async (req, res) => {
-  const { error } = validation(req.body);
+  const { error } = signUpValidation(req.body);
   if (error) return res.status(400).json(error.details[0].message);
 
   const dbUser = await User.findOne({ name: req.body.name });
@@ -17,7 +17,7 @@ router.post('/signup', async (req, res) => {
 
   //Create new user
   const user = new User({
-    name: req.body.name,
+    name: req.body.name.trim().toLowerCase(),
     passcode: hashedPassword,
     avatar: req.body.avatar,
     modificationDate: new Date(),
@@ -33,10 +33,11 @@ router.post('/signup', async (req, res) => {
 
 router.post('/signin', async (req, res) => {
   //Validation before loggin in
-  const { error } = validation(req.body);
+  const { error } = signInValidation(req.body);
+
   if (error) return res.status(400).json(error.details[0].message);
 
-  const user = await User.findOne({ name: req.body.name });
+  const user = await User.findOne({ name: req.body.name.trim().toLowerCase() });
 
   //Check if the email exists
   if (!user) return res.status(400).json('User does not exist');

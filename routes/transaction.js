@@ -39,13 +39,9 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.get('/deleteAll', async (req, res) => {
+router.delete('/reset/:userId', async (req, res) => {
   try {
-    const transactions = await Transaction.find();
-    // console.log(transactions);
-    // transactions.forEach(transaction => {
-    //     Transaction.deleteOne({ _id: Transaction._id })
-    // });
+    const transactions = await Transaction.deleteMany({ userId: req.params.userId });
     res.json(transactions);
   } catch (error) {
     res.status(400).json(error);

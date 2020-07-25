@@ -1,6 +1,6 @@
 const Joi = require('@hapi/joi');
 
-const validation = (data) => {
+const signUpValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(2).required(),
     passcode: Joi.string().length(4).required(),
@@ -9,4 +9,13 @@ const validation = (data) => {
   return schema.validate(data);
 };
 
-module.exports.validation = validation;
+const signInValidation = (data) => {
+  const schema = Joi.object({
+    name: Joi.string().min(2).required(),
+    passcode: Joi.string().length(4).required()
+  });
+  return schema.validate(data);
+};
+
+module.exports.signUpValidation = signUpValidation;
+module.exports.signInValidation = signInValidation;
