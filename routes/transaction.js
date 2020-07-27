@@ -14,7 +14,7 @@ router.post('/create', async (req, res) => {
 
   try {
    await transaction.save();
-    res.json('Transcation Created');
+    res.json(transaction);
   } catch (error) {
     res.status(400).json(error);
   }
