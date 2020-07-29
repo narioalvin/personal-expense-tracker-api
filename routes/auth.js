@@ -56,11 +56,17 @@ router.post('/signin', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   try {
-    const updatedUser = await User.updateOne(
+    const updatedUser = await User.findOneAndUpdate(
       { _id: req.params.id },
       { $set: { modificationDate: new Date() } }
     );
-    res.json(updatedUser);
+
+    res.json({
+      id: updatedUser.id,
+      name: updatedUser.name,
+      avatar: updatedUser.avatar,
+      modificationDate: new Date(),
+    });
   } catch (error) {
     res.status(400).json(error);
     console.log(error);
